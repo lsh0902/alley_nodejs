@@ -6,7 +6,10 @@ fs.promises.readdir(targetDir)
   .then(res => {
     res.forEach(file => {
       const parsed = path.parse(file);
-      if('.jpg' === parsed.ext && parsed.name.includes('E'))  middleDir = 'duplicated'
+      if('.jpg' === parsed.ext && parsed.name.includes('E'))  {
+        parsed.base.replace('E', '');
+        middleDir = 'duplicated'
+      }
       else if(['.aae', '.png'].includes(parsed.ext))          middleDir = 'captured'
       else if(['.mov','.mp4'].includes(parsed.ext))           middleDir = 'video'
       else return; 
