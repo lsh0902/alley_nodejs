@@ -1,12 +1,13 @@
 import axios from 'axios';
 
 export default class TweetService {
-  constructor(base, storage, authErrorEventBus) {
+  constructor(base, storage, authErrorEventBus, socket) {
     this.instance = axios.create({
       baseURL : base,
     })
     this.storage = storage;
     this.authErrorEventBus = authErrorEventBus;
+    this.socket = socket;
   }
 
   setToken() {
@@ -25,15 +26,16 @@ export default class TweetService {
   }
 
   async postTweet(text) {
-    return await axios.post('http://localhost:8080/tweets', {
+    const tweet = await axios.post('http://localhost:8080/tweets', {
       id: Date.now(),
       createdAt: new Date(),
       userId : 1,
       text,
+    }, {
       headers : {
         Authorization : this.storage.get()
-      }
-    }).then(res => res.data);
+      }}).then(res => res.data).catch();
+    return tweet;
   }
 
   async deleteTweet(tweetId) {
@@ -66,5 +68,8 @@ export default class TweetService {
     }
   }
 
+  onSync(callback){
+    return this.socket.onSync('tweets', callback);
+  }
 }
 

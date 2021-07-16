@@ -6,6 +6,10 @@ import tweetRouter from './controller/tweet.js';
 import userRouter from './controller/user.js';
 import { resourceLimits } from 'worker_threads';
 import { body, param, validationResult } from 'express-validator';
+import { config } from './config.js';
+import {Init} from './connection/connect.js';
+import { db } from './db/database.js';
+
 
 const app = express();
 
@@ -38,9 +42,12 @@ app.use((req,res,next)=>{
   res.sendStatus(404);
 });
 
+
 app.use((error, req,res,next)=>{
   console.error(error);
   res.sendStatus(500);
 })
 
-app.listen(8080);
+db.getConnection().then(console.log);
+const server = app.listen(config.host.port);
+Init(server);

@@ -18,9 +18,7 @@ router.get('/:id',[
   validate
 ], tweetController.getTweet);
 
-router.post('/',[
-  body('username').trim().notEmpty().withMessage('이름 입력해').isLength({ min : 3}).withMessage('이름 3자 이상. 외자임? ㄲㅈ')
-], isAuth,validateTweet ,tweetController.createTweet);
+router.post('/', isAuth, validateTweet ,tweetController.createTweet);
 
 router.put('/:id', isAuth, isUser, validateTweet, tweetController.updateTweet);
 

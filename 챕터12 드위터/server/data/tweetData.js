@@ -35,7 +35,6 @@ export async function getTweetByUserName(username) {
 
 export async function getTweetById(id) {
   const found = tweets.find(tweet => tweet.id == id);
-  console.log(tweets)
   if(!found) return null;
   const {name, url, username } = await userRepository.findById(found.userId);
   return {...found, name, url, username};

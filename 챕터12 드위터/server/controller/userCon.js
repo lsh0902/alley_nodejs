@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import * as userRepository from '../data/userData.js';
+import { config } from '../config.js';
 
-const jwtSecretKey = 'dsfno43045'
-const ExpireDate = '2d';
-const salt = 4;
 
 export async function login(req,res,next) {
   const {username, password} = req.body;
@@ -23,7 +21,7 @@ export async function signUp(req,res,next) {
   if(found) {
     return res.status(409).json({message : '이미 존재하는 사용자'});
   }
-  const hashed = await bcrypt.hash(password, salt);
+  const hashed = await bcrypt.hash(password, config.bcrypt.salt);
   const userId = await userRepository.createUser({
     username,
     passworod : hashed,
@@ -46,7 +44,7 @@ function createToken(userId) {
   return jwt.sign({
     id : userId,
     isAdmin : false
-  }, jwtSecretKey, {
-    expiresIn : ExpireDate
+  }, config.jwt.secretKey, {
+    expiresIn : config.jwt.expires
   })
 }

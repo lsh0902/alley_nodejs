@@ -5,6 +5,13 @@ let user = [
     password : '$2b$04$XTo6IZuIYJZXiY7trZKeKOtSYvEiPAS3rdhaktKsFPY88GZLsBuxK',
     email : 'hehesi207@nave.com',
     url : 'Http://www.sdf.fdbs/fbsdbosd'
+  },
+  {
+    id : 2,
+    username : 'hjw',
+    password : '$2b$04$XTo6IZuIYJZXiY7trZKeKOtSYvEiPAS3rdhaktKsFPY88GZLsBuxK',
+    email : 'jubilee@nave.com',
+    url : 'http://www.sdf.fdbs/fbsdbosd'
   }
 ]
 
